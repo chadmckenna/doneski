@@ -1,7 +1,7 @@
 require 'yaml/store'
 require_relative 'task'
 
-class Done
+class TasksCollection
 
   @@location = ENV['HOME'] + '/.task.store'
 
@@ -29,10 +29,6 @@ class Done
     @tasks.select{|task| !task.completed? }
   end
 
-  def ids
-    @tasks.map(&:id)
-  end
-
   def add(title)
     @tasks << Task.new({'title' => title})
     store
@@ -46,8 +42,15 @@ class Done
     task
   end
 
+  def start(id)
+    task = @tasks.select{|task| task.id.to_s == id.to_s}.first
+    task.start
+    store
+    task    
+  end
+
   def self.display_header
-    "#{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'finished:'.ljust(30)}"
+    "#{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'updated:'.ljust(30)}"
   end
 
 private

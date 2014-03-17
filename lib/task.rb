@@ -1,22 +1,29 @@
 class Task
   attr_reader :id
-  attr_accessor :title, :date_created, :date_finished, :completed
+  attr_accessor :title, :date_created, :date_updated, :stage
+
+  STATUS = {new: 1, started: 5, complete: 2}
 
   def initialize(options)
     @id = options['id'] || (0...4).map { ('a'..'z').to_a[rand(26)] }.join
     @title = options['title']
-    @completed = options['completed'] || false
+    @stage = options['stage'] || STATUS[:new]
     @date_created = options['date_created'] || Time.now
-    @date_finished = options['date_finished'] || nil
+    @date_updated = options['date_updated'] || nil
   end
 
   def complete
-    @date_finished = Time.now
-    @completed = true
+    @date_updated = Time.now
+    @stage = STATUS[:complete]
   end
 
   def completed?
-    completed
+    stage == STATUS[:complete] 
+  end
+
+  def start
+    @date_updated = Time.now
+    @stage = STATUS[:started]
   end
 
   def match(options)
@@ -25,6 +32,6 @@ class Task
   end
 
   def to_s
-    "\e[0;3#{completed? ? '2' : '1'}m#{id.to_s.ljust(8)}#{title.ljust(80)}#{date_created.to_s.ljust(30)}#{date_finished.to_s.ljust(30)}\e[0m"
+    "\e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)}#{date_created.to_s.ljust(30)}#{date_updated.to_s.ljust(30)}\e[0m"
   end
 end

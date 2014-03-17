@@ -19,6 +19,11 @@ class Task
     completed
   end
 
+  def match(options)
+    options.each{|key, value| return true if self.send(key) == value}
+    false
+  end
+
   def to_s
     "\e[0;3#{completed? ? '2' : '1'}m#{id.to_s.ljust(8)}#{title.ljust(80)}#{date_created.to_s.ljust(30)}#{date_finished.to_s.ljust(30)}\e[0m"
   end

@@ -14,9 +14,10 @@ optparse = OptionParser.new do |opts|
     puts @done.all
   end
 
-  opts.on('-rmv', '--remove-completed', 'Clears all completed tasks from the list') do
+  opts.on('-r', '--remove [ID]', 'Clears all completed tasks from the list') do |id|
     puts Done.display_header
-    puts @done.clear_completed
+    puts @done.remove id: id if id
+    puts @done.remove completed: true unless id
   end
 
   opts.on('-c', '--completed', 'Completed tasks') do

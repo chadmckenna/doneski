@@ -15,8 +15,8 @@ class Done
     @tasks
   end
 
-  def clear_completed
-    @tasks = incomplete
+  def remove(options)
+    @tasks = @tasks.select{|task| !task.match(options)}
     store
     @tasks
   end

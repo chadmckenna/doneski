@@ -1,10 +1,12 @@
 require 'yaml/store'
+require 'fileutils'
 require_relative 'task'
 
 class Done
 
   def initialize
-    @yaml = YAML.load_file('task.store')
+    FileUtils.touch '~/.task.store'
+    @yaml = YAML.load_file('~/.task.store')
     @tasks = @yaml ? @yaml['tasks'] : []
   end
 

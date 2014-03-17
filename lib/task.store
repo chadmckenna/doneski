@@ -1,8 +1,0 @@
----
-tasks:
-- !ruby/object:Task
-  id: qgay
-  title: Check on garys bug
-  completed: false
-  date_created: 2014-03-17 12:13:55.607772000 -05:00
-  date_finished: 

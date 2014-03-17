@@ -1,12 +1,11 @@
 require 'yaml/store'
-require 'fileutils'
 require_relative 'task'
 
 class Done
 
   def initialize
-    FileUtils.touch '~/.task.store'
-    @yaml = YAML.load_file('~/.task.store')
+    `touch ~/.task.store`
+    @yaml = YAML.load_file(ENV['HOME'] + '/.task.store')
     @tasks = @yaml ? @yaml['tasks'] : []
   end
 
@@ -38,7 +37,7 @@ class Done
 private
   
   def store
-    @store = YAML::Store.new 'task.store'
+    @store = YAML::Store.new '.task.store'
     @store.transaction do
       @store['tasks'] = @tasks
     end

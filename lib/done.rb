@@ -3,10 +3,22 @@ require_relative 'task'
 
 class Done
 
+  @@location = ENV['HOME'] + '/.task.store'
+
   def initialize
-    `touch ~/.task.store`
-    @yaml = YAML.load_file(ENV['HOME'] + '/.task.store')
+    `touch #{@@location}`
+    @yaml = YAML.load_file(@@location)
     @tasks = @yaml ? @yaml['tasks'] : []
+  end
+
+  def all
+    @tasks
+  end
+
+  def clear_completed
+    @tasks = incomplete
+    store
+    @tasks
   end
 
   def completed
@@ -24,7 +36,7 @@ class Done
   def add(title)
     @tasks << Task.new({'title' => title})
     store
-    @tasks.last
+    @tasks
   end
 
   def finish(id)
@@ -34,10 +46,14 @@ class Done
     task
   end
 
+  def self.display_header
+    "#{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'finished:'.ljust(30)}"
+  end
+
 private
   
   def store
-    @store = YAML::Store.new '.task.store'
+    @store = YAML::Store.new(@@location)
     @store.transaction do
       @store['tasks'] = @tasks
     end

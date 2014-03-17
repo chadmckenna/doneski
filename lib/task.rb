@@ -20,12 +20,6 @@ class Task
   end
 
   def to_s
-    {
-      id: id,
-      title: title,
-      date_created: date_created,
-      date_finished: date_finished,
-      completed?: completed?
-    }.to_s
+    "\e[0;3#{completed? ? '2' : '1'}m#{id.to_s.ljust(8)}#{title.ljust(80)}#{date_created.to_s.ljust(30)}#{date_finished.to_s.ljust(30)}\e[0m"
   end
 end

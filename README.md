@@ -12,30 +12,39 @@ Simply run `doneski` to list your current tasks. You can add a task by calling `
 
 ![alt tag](https://raw.github.com/chadmckenna/doneski/master/screenshot.png)
 
-Running `doneski -h` will get you a list of functions that can be called.
-
-Current functions:
+## Current functionality:
+### Listing tasks
 ```
 $ doneski -l [column to sort]
 ```
 Example: `doneski -l title` will sort by title
+
+### Adding tasks
+```
+$ doneski -a The task title goes here
+```
+This will add a new task with the title `The task title goes here` and move the task to the `:new` phase
+
+### Removing tasks
 ```
 $ doneski -r [id]
 ```
 Example: `doneski -r xysf` will remove the task with the `id` of `xysf`
 Example: `doneski -r` will remove ALL completed tasks
-```
-$ doneski -a The task title goes here
-```
-This will add a new task with the title `The task title goes here` and move the task to the `:new` phase
+
+### Starting tasks
 ```
 $ doneski -s id
 ```
 Example: `doneski -s xysf` will move the task with the id `xysf` to the `:started` phase
+
+### Finishing tasks
 ```
 $ doneski -f id
 ```
 Example: `doneski -f xysf` will finish the task with the id `xysf` to the `:completed` phase
+
+### Getting help
 ```
 $ doneski -h
 ```

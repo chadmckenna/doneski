@@ -2,7 +2,7 @@ require 'yaml/store'
 
 class TasksCollection
 
-  @@location = ENV['HOME'] + '/.task.store'
+  @@location = File.expand_path '~/.task.store'
 
   def initialize
     `touch #{@@location}`

@@ -5,9 +5,12 @@ class TasksCollection
   @@location = File.expand_path '~/.task.store'
 
   def initialize
-    `touch #{@@location}`
-    @yaml = YAML.load_file(@@location)
-    @tasks = @yaml ? @yaml['tasks'] : []
+    if File.exists? @@location
+      @yaml = YAML.load_file(@@location)
+      @tasks = @yaml ? @yaml['tasks'] : []
+    else
+      File.open(@@location, 'w+'){|f| f.puts "---\ntasks:"}
+    end
   end
 
   def all

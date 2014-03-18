@@ -44,3 +44,4 @@ optparse.parse!
 
 puts TasksCollection.display_header
 puts @done.sort(@sort)
+puts TasksCollection.display_footer

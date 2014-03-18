@@ -40,7 +40,11 @@ class TasksCollection
   end
 
   def self.display_header
-    "#{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'updated:'.ljust(30)}"
+    "#{'-'*152}\n| #{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'updated:'.ljust(30)} |\n#{'-'*152}"
+  end
+
+  def self.display_footer
+    "#{'-'*152}"
   end
 
 private

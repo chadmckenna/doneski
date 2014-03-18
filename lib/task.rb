@@ -28,6 +28,6 @@ class Task
   end
 
   def to_s
-    "\e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)}#{date_created.to_s.ljust(30)}#{date_updated.to_s.ljust(30)}\e[0m"
+    "| \e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)[0...80]}#{date_created.to_s.ljust(30)}#{date_updated.to_s.ljust(30)}\e[0m |"
   end
 end

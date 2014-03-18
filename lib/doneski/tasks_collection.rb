@@ -5,12 +5,9 @@ class TasksCollection
   @@location = File.expand_path '~/.task.store'
 
   def initialize
-    if File.exists? @@location
-      @yaml = YAML.load_file(@@location)
-      @tasks = @yaml ? @yaml['tasks'] : []
-    else
-      File.open(@@location, 'w+'){|f| f.puts "---\ntasks:"}
-    end
+    create unless File.exists? @@location
+    @yaml = YAML.load_file(@@location)
+    @tasks = @yaml ? @yaml['tasks'] : []
   end
 
   def all
@@ -18,7 +15,7 @@ class TasksCollection
   end
 
   def sort(column = :stage)
-    @tasks.sort {|a, b| a.send(column) <=> b.send(column)}
+    @tasks.sort {|a, b| a.send(column) <=> b.send(column)} if @tasks.length > 0
   end
 
   def remove(options)
@@ -56,6 +53,10 @@ private
     @store.transaction do
       @store['tasks'] = @tasks
     end
+  end
+
+  def create
+    File.open(@@location, 'w+'){|f| f.puts "# .task.store"}
   end
 
 end

@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Doneski::VERSION
   spec.authors       = ["Chad McKenna"]
   spec.email         = ["chad.mckenna@gmail.com"]
-  spec.summary       = %q{doneski -- the app!}
-  spec.description   = %q{A simple task/checklist cli}
-  spec.homepage      = ""
+  spec.summary       = %q{A simple task management CLI}
+  spec.description   = %q{A simple task management CLI similar in usage to PivotalTracker.}
+  spec.homepage      = "https://github.com/chadmckenna/doneski"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

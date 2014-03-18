@@ -1,12 +1,23 @@
-Gem::Specification.new do |s|
-  s.name        = 'doneski'
-  s.version     = '0.0.1'
-  s.date        = '2014-03-17'
-  s.summary     = "doneski"
-  s.description = "A simple checklist cli"
-  s.authors     = ["Chad McKenna"]
-  s.email       = 'chad.mckenna@gmail.com'
-  s.files       = ["lib/doneski.rb", 'lib/done.rb', 'lib/task.store', 'lib/task.rb']
-  s.homepage    = ''
-  s.license     = 'MIT'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'doneski/version'
+
+Gem::Specification.new do |spec|
+  spec.name          = "doneski"
+  spec.version       = Doneski::VERSION
+  spec.authors       = ["Chad McKenna"]
+  spec.email         = ["chad.mckenna@gmail.com"]
+  spec.summary       = %q{doneski -- the app!}
+  spec.description   = %q{A simple task/checklist cli}
+  spec.homepage      = ""
+  spec.license       = "MIT"
+
+  spec.files         = `git ls-files -z`.split("\x0")
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.5"
+  spec.add_development_dependency "rake"
 end

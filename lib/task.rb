@@ -17,10 +17,6 @@ class Task
     @stage = STATUS[:complete]
   end
 
-  def completed?
-    stage == STATUS[:complete] 
-  end
-
   def start
     @date_updated = Time.now
     @stage = STATUS[:started]

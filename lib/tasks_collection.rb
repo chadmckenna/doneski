@@ -15,38 +15,28 @@ class TasksCollection
     @tasks
   end
 
+  def sort(column = :stage)
+    @tasks.sort {|a, b| a.send(column) <=> b.send(column)}
+  end
+
   def remove(options)
     @tasks = @tasks.select{|task| !task.match(options)}
     store
-    @tasks
-  end
-
-  def completed
-    @tasks.select{|task| task.completed? }
-  end
-
-  def incomplete
-    @tasks.select{|task| !task.completed? }
   end
 
   def add(title)
     @tasks << Task.new({'title' => title})
     store
-    @tasks
   end
 
   def finish(id)
-    task = @tasks.select{|task| task.id.to_s == id.to_s}.first
-    task.complete
+    @tasks.select{|task| task.id.to_s == id.to_s}.first.complete
     store
-    task
   end
 
   def start(id)
-    task = @tasks.select{|task| task.id.to_s == id.to_s}.first
-    task.start
+    @tasks.select{|task| task.id.to_s == id.to_s}.first.start
     store
-    task    
   end
 
   def self.display_header

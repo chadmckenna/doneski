@@ -8,6 +8,7 @@ class TasksCollection
     create unless File.exists? @@location
     @yaml = YAML.load_file(@@location)
     @tasks = @yaml ? @yaml['tasks'] : []
+    update_attributes(@tasks)
   end
 
   def all
@@ -20,6 +21,11 @@ class TasksCollection
 
   def remove(options)
     @tasks = @tasks.select{|task| !task.match(options)}
+    store
+  end
+
+  def set_priority(id, priority)
+    @tasks.select{|task| task.match({id: id})}.first.priority = priority
     store
   end
 
@@ -39,11 +45,11 @@ class TasksCollection
   end
 
   def self.display_header
-    "#{'-'*152}\n| #{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'updated:'.ljust(30)} |\n#{'-'*152}"
+    "#{'-'*162}\n| #{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'updated:'.ljust(30)}#{'priority:'.ljust(10)} |\n#{'-'*162}"
   end
 
   def self.display_footer
-    "#{'-'*152}"
+    "#{'-'*162}"
   end
 
 private
@@ -57,6 +63,18 @@ private
 
   def create
     File.open(@@location, 'w+'){|f| f.puts "# .task.store"}
+  end
+
+  def update_attributes(tasks)
+    tasks.each do |task|
+      attrs.each do |attr|
+        task.send((attr.to_s+"=").to_sym, '') unless task.send attr
+      end
+    end
+  end
+
+  def attrs
+    [:title, :date_created, :date_updated, :stage, :priority]
   end
 
 end

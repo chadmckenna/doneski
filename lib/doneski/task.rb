@@ -10,11 +10,24 @@ class Task
     @stage = options['stage'] || STATUS[:new]
     @date_created = options['date_created'] || Time.now
     @date_updated = options['date_updated'] || nil
+    @priority = options['priority'] || ''
   end
 
   def complete
     @date_updated = Time.now
     @stage = STATUS[:complete]
+  end
+
+  def priority
+    !@priority.nil? ? -@priority.length : nil
+  end
+
+  def priority=(priority)
+    if priority.nil?
+      @priority = ''
+    else
+      @priority = priority.match(/\+{1,}/)[0] unless priority.nil?
+    end
   end
 
   def start
@@ -28,6 +41,6 @@ class Task
   end
 
   def to_s
-    "| \e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)[0...80]}#{date_created.to_s.ljust(30)}#{date_updated.to_s.ljust(30)}\e[0m |"
+    "| \e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)[0...80]}#{date_created.to_s.ljust(30)}#{date_updated.to_s.ljust(30)}#{@priority.ljust(10)}\e[0m |"
   end
 end

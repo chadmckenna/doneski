@@ -2,36 +2,40 @@
 require 'optparse'
 require 'doneski'
 
-@done = TasksCollection.new
-@sort = :stage
+@task_collection = TasksCollection.new
+@sort = :priority
 
 options = {}
 
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: doneski.rb"
 
-  opts.on('-l', '--list [sort]', 'Show all tasks. Optionally you can supply a column to sort by: id, title, date_created, or stage') do |sort|
-    @sort = sort.downcase.to_sym if sort && ['id', 'title', 'date_created', 'stage'].include?(sort.downcase)
-    @done.all
+  opts.on('-l', '--list [sort]', 'Show all tasks. Optionally you can supply a column to sort by: id, title, date_created, stage, priority') do |sort|
+    @sort = sort.downcase.to_sym if sort && ['id', 'title', 'date_created', 'stage', 'priority'].include?(sort.downcase)
+    @task_collection.all
   end
 
   opts.on('-r', '--remove [ID]', 'Clears all completed tasks from the list') do |id|
-    @done.remove id: id if id
-    @done.remove stage: Task::STATUS[:complete] unless id
+    @task_collection.remove id: id if id
+    @task_collection.remove stage: Task::STATUS[:complete] unless id
   end
 
   opts.on('-a', '--add title', 'Add a new task') do |title|
-    @sort = :date_created
     ARGV.unshift title
-    @done.add("#{ARGV.join(' ')}")
+    @task_collection.add("#{ARGV.join(' ')}")
   end
 
   opts.on('-s', '--start id', 'Start a task') do |id|
-    @done.start(id)
+    @task_collection.start(id)
   end
 
   opts.on('-f', '--finish id', "Finish a task") do |id|
-    @done.finish(id)
+    @task_collection.finish(id)
+  end
+
+  opts.on('-p', '--priority id rating', "Set priority on a task (higher priority has more ++++)") do |id|
+    ARGV.unshift id
+    @task_collection.set_priority(ARGV[0], ARGV[1])
   end
 
   opts.on('-h', '--help', 'Display help') do
@@ -43,5 +47,5 @@ end
 optparse.parse!
 
 puts TasksCollection.display_header
-puts @done.sort(@sort)
+puts @task_collection.sort(@sort)
 puts TasksCollection.display_footer

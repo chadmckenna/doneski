@@ -1,5 +1,7 @@
 # doneski
 
+[![Gem Version](https://badge.fury.io/rb/doneski.png)](http://badge.fury.io/rb/doneski)
+
 This is a quick CLI to manage tasks. 
 
 You can install the gem simply with:

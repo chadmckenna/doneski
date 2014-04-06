@@ -45,11 +45,11 @@ class TasksCollection
   end
 
   def self.display_header
-    "#{'-'*162}\n| #{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'updated:'.ljust(30)}#{'priority:'.ljust(10)} |\n#{'-'*162}"
+    "#{'-'*132}\n| #{'id:'.ljust(8)}#{'title:'.ljust(80)}#{'created:'.ljust(30)}#{'priority:'.ljust(10)} |\n#{'-'*132}"
   end
 
   def self.display_footer
-    "#{'-'*162}"
+    "#{'-'*132}"
   end
 
 private
@@ -74,7 +74,7 @@ private
   end
 
   def attrs
-    [:title, :date_created, :date_updated, :stage, :priority]
+    [:title, :date_created, :stage, :priority]
   end
 
 end

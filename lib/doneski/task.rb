@@ -1,6 +1,6 @@
 class Task
   attr_reader :id
-  attr_accessor :title, :date_created, :date_updated, :stage
+  attr_accessor :title, :date_created, :stage
 
   STATUS = {new: 1, started: 5, complete: 2}
 
@@ -9,12 +9,10 @@ class Task
     @title = options['title']
     @stage = options['stage'] || STATUS[:new]
     @date_created = options['date_created'] || Time.now
-    @date_updated = options['date_updated'] || nil
     @priority = options['priority'] || ''
   end
 
   def complete
-    @date_updated = Time.now
     @stage = STATUS[:complete]
   end
 
@@ -31,7 +29,6 @@ class Task
   end
 
   def start
-    @date_updated = Time.now
     @stage = STATUS[:started]
   end
 
@@ -41,6 +38,6 @@ class Task
   end
 
   def to_s
-    "| \e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)[0...80]}#{date_created.to_s.ljust(30)}#{date_updated.to_s.ljust(30)}#{@priority.ljust(10)}\e[0m |"
+    "| \e[0;3#{stage.to_s}m#{id.to_s.ljust(8)}#{title.ljust(80)[0...80]}#{date_created.to_s.ljust(30)}#{@priority.ljust(10)}\e[0m |"
   end
 end

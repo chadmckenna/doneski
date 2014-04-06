@@ -5,8 +5,6 @@ require 'doneski'
 @task_collection = TasksCollection.new
 @sort = :priority
 
-options = {}
-
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: doneski.rb"
 
